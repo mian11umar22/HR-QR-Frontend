@@ -153,7 +153,7 @@ const Step3UploadScannedFiles = ({ onBack, onComplete = () => {} }) => {
                 <p className="text-sm font-medium text-gray-800 mb-2">
                   {url.split("/").pop()}
                 </p>
-                <object
+                <iframe
                   src={url}
                   className="w-full h-72 border rounded"
                   title={`preview-${idx}`}
