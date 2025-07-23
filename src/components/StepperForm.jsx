@@ -4,7 +4,7 @@ import { Toaster, toast } from "react-hot-toast";
 // 🔄 Import your step components here (make sure the paths are correct)
 import Step1CandidateInput from "./Step1CandidateInput";
 import Step2GeneratePreview from "./Step2GeneratePreview";
-import Step3UploadScannedFiles from "./Step3UploadScannedFiles";
+  
 
 const StepperForm = () => {
   const [step, setStep] = useState(1);
@@ -25,7 +25,7 @@ const StepperForm = () => {
         <div className="p-8">
           {/* 🔢 Stepper indicator */}
           <div className="flex items-center justify-between mb-8">
-            {[1, 2, 3].map((stepNumber) => (
+            {[1, 2].map((stepNumber) => (
               <React.Fragment key={stepNumber}>
                 {stepNumber > 1 && (
                   <div className="flex-1 h-1 mx-4 bg-gray-200">
@@ -50,6 +50,7 @@ const StepperForm = () => {
           </div>
 
           {/* 👣 Step screens */}
+          {/* 👣 Step screens */}
           {step === 1 && (
             <Step1CandidateInput
               formData={formData}
@@ -63,14 +64,7 @@ const StepperForm = () => {
             <Step2GeneratePreview
               files={generatedFiles}
               onBack={() => setStep(1)}
-              onNext={() => setStep(3)}
-            />
-          )}
-
-          {step === 3 && (
-            <Step3UploadScannedFiles
-              onBack={() => setStep(2)}
-               
+              // 🧼 Remove: onNext={() => setStep(3)}
             />
           )}
         </div>

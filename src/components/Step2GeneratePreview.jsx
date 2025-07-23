@@ -1,7 +1,48 @@
 import React from "react";
 import toast from "react-hot-toast";
 
-const Step2GeneratePreview = ({ files, onBack, onNext }) => {
+const Step2GeneratePreview = ({ files, onBack }) => {
+  const handleDownloadAll = async () => {
+    if (!files || files.length === 0) {
+      toast.error("No files available to download.");
+      return;
+    }
+
+    toast.loading("Merging and downloading...");
+
+    try {
+      const res = await fetch(
+        "https://hr-qr-production.up.railway.app/merge-pdfs",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ files }),
+        }
+      );
+
+      if (!res.ok) throw new Error("Failed to merge PDFs");
+
+      const blob = await res.blob();
+      const url = window.URL.createObjectURL(blob);
+
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "merged-qr-documents.pdf";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
+      toast.dismiss();
+      toast.success("Downloaded successfully");
+    } catch (error) {
+      console.error(error);
+      toast.dismiss();
+      toast.error("Download failed");
+    }
+  };
+
   return (
     <div className="space-y-6">
       <h2 className="text-2xl font-bold text-gray-800 mb-2">
@@ -93,7 +134,8 @@ const Step2GeneratePreview = ({ files, onBack, onNext }) => {
             </ul>
           </div>
 
-          <div className="flex justify-between mt-6">
+          {/* Buttons */}
+          <div className="flex justify-between mt-6 flex-wrap gap-4">
             <button
               onClick={(e) => {
                 e.preventDefault();
@@ -101,29 +143,14 @@ const Step2GeneratePreview = ({ files, onBack, onNext }) => {
               }}
               className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
-              <svg
-                className="-ml-1 mr-2 h-5 w-5 text-gray-500"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z"
-                  clipRule="evenodd"
-                />
-              </svg>
-              Back to Form
+              ⬅️ Back to Form
             </button>
 
             <button
-              onClick={(e) => {
-                e.preventDefault();
-                onNext(); // ✅ Move to Step 3
-              }}
-              className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              onClick={handleDownloadAll}
+              className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
             >
-              Continue to Upload
+              📥 Download All as One PDF
             </button>
           </div>
         </>

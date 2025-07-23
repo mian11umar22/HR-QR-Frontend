@@ -2,6 +2,7 @@ import Header from "./components/Header";
 import QRScanner from "./components/QRScanner";
 import StepperForm from "./components/StepperForm";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import TabsContainer from "./components/TabsContainer";
 
 function App() {
   return (
@@ -9,7 +10,7 @@ function App() {
       <BrowserRouter>
       <Header/>
         <Routes>
-          <Route path="/" element={<StepperForm />} />
+          <Route path="/" element={<TabsContainer />} />
           <Route path="/scan-qr" element={<QRScanner />} />
         </Routes>
       </BrowserRouter>
