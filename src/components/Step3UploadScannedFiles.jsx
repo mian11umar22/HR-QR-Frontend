@@ -144,23 +144,24 @@ const Step3UploadScannedFiles = ({ onBack, onComplete = () => {} }) => {
         </form>
 
         {uploadedPreviews.length > 0 && (
-          <div className="mt-6 space-y-4">
+          <div className="mt-6 space-y-2">
             <h3 className="text-md font-semibold text-gray-700">
-              Uploaded File Previews:
+              Uploaded File Links:
             </h3>
-            {uploadedPreviews.map((url, idx) => (
-              <div key={idx} className="border rounded p-2 bg-gray-50">
-                <p className="text-sm font-medium text-gray-800 mb-2">
-                  {url.split("/").pop()}
-                </p>
-                <iframe
-                  src={url}
-                  className="w-full h-72 border rounded"
-                  title={`preview-${idx}`}
-                  allow="autoplay"
-                />
-              </div>
-            ))}
+            <ul className="list-disc list-inside text-blue-600">
+              {uploadedPreviews.map((url, idx) => (
+                <li key={idx}>
+                  <a
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline hover:text-blue-800"
+                  >
+                    {url}
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
         )}
       </div>
