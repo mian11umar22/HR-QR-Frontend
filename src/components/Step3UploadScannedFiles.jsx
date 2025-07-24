@@ -40,7 +40,6 @@ const Step3UploadScannedFiles = ({ onBack, onComplete = () => {} }) => {
       if (res.ok) {
         toast.success("Files uploaded successfully", { id: toastId });
 
-        // ✅ Extract URLs from `uploaded` field
         const previews = (data.uploaded || []).map((file) => file.fileUrl);
         setUploadedPreviews(previews);
         onComplete();
@@ -146,22 +145,30 @@ const Step3UploadScannedFiles = ({ onBack, onComplete = () => {} }) => {
         {uploadedPreviews.length > 0 && (
           <div className="mt-6 space-y-2">
             <h3 className="text-md font-semibold text-gray-700">
-              Uploaded File Links:
+              Uploaded Previews:
             </h3>
-            <ul className="list-disc list-inside text-blue-600">
-              {uploadedPreviews.map((url, idx) => (
-                <li key={idx}>
-                  <a
-                    href={url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="underline hover:text-blue-800"
-                  >
-                    {url}
-                  </a>
-                </li>
-              ))}
-            </ul>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {uploadedPreviews.map((url, idx) => {
+                const isPDF = url.toLowerCase().endsWith(".pdf");
+                return (
+                  <div key={idx} className="border rounded shadow p-2 bg-white">
+                    {isPDF ? (
+                      <iframe
+                        src={url}
+                        title={`PDF Preview ${idx}`}
+                        className="w-full h-64"
+                      />
+                    ) : (
+                      <img
+                        src={url}
+                        alt={`Preview ${idx}`}
+                        className="w-full h-64 object-contain"
+                      />
+                    )}
+                  </div>
+                );
+              })}
+            </div>
           </div>
         )}
       </div>
