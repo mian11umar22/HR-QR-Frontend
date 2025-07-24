@@ -156,13 +156,13 @@ const Step3UploadScannedFiles = ({ onBack, onComplete = () => {} }) => {
                       <iframe
                         src={url}
                         title={`PDF Preview ${idx}`}
-                        className="w-full h-64"
+                        className="w-full h-[650px] rounded border"
                       />
                     ) : (
                       <img
                         src={url}
                         alt={`Preview ${idx}`}
-                        className="w-full h-64 object-contain"
+                        className="w-full h-[650px] object-contain rounded border"
                       />
                     )}
                   </div>
