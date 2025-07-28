@@ -27,7 +27,8 @@ export default function QRScanner() {
       const loadingToast = toast.loading("Scanning for QR code...");
 
       const res = await fetch(
-        `https://hr-qr-production.up.railway.app/qr/upload`,
+        // `https://hr-qr-production.up.railway.app/qr/upload`,
+        `http://localhost:5000/qr/upload`,
         {
           method: "POST",
           body: formData,

@@ -16,12 +16,12 @@ export default function Header() {
         >
           Home
         </button>
-        <button
+        {/* <button
           onClick={() => navigate("scan-qr")}
           className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition w-full md:w-auto"
         >
           Scan QR
-        </button>
+        </button> */}
         
       </div>
     </header>
