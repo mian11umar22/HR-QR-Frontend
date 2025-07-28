@@ -33,7 +33,7 @@ const Step3UploadScannedFiles = ({ onBack, onComplete = () => {} }) => {
 
       // const res = await fetch("http://localhost:5000/upload-hr-page", {
       const res = await fetch(
-        "hr-qr-production.up.railway.app/upload-hr-page",
+        "https://hr-qr-production.up.railway.app/upload-hr-page",
         {
           method: "POST",
           body: formData,
@@ -258,7 +258,7 @@ const Step3UploadScannedFiles = ({ onBack, onComplete = () => {} }) => {
 
                         const res = await fetch(
                           // "http://localhost:5000/replace-uploaded-file",
-                          "hr-qr-production.up.railway.app/replace-uploaded-file",
+                          "https://hr-qr-production.up.railway.app/replace-uploaded-file",
                           {
                             method: "POST",
                             headers: { "Content-Type": "application/json" },

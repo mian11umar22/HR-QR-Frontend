@@ -23,7 +23,7 @@ export default function GenerateQRForm() {
     try {
       // const response = await fetch("http://localhost:5000/qrDocument", {
       const response = await fetch(
-        "hr-qr-production.up.railway.app/qrDocument",
+        "https://hr-qr-production.up.railway.app/qrDocument",
         {
           method: "POST",
           headers: {
