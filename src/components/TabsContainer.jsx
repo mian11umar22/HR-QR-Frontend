@@ -1,47 +1,61 @@
 import React, { useState } from "react";
-import StepperForm from "./StepperForm";
+import StatsHeader from "./StatsHeader";
+import Step1CandidateInput from "./Step1CandidateInput";
+import InfoCards from "./InfoCards";
 import Step3UploadScannedFiles from "./Step3UploadScannedFiles";
+import { QrCode, Upload } from "lucide-react"; // ✅ Removed ShieldCheck
 
-const TabsContainer = () => {
+export default function TabsContainer() {
   const [activeTab, setActiveTab] = useState(1);
-  const [uploaded, setUploaded] = useState(false); // optional status
+
+  const tabs = [
+    { id: 1, label: "Generate QR Codes", icon: <QrCode size={18} /> },
+    { id: 2, label: "Upload Documents", icon: <Upload size={18} /> },
+  ];
 
   return (
-    <div className="min-h-screen bg-gray-100 py-8 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl mx-auto">
-        <div className="mb-4 flex justify-center space-x-4">
-          <button
-            className={`px-6 py-2 font-medium rounded-md ${
-              activeTab === 1
-                ? "bg-indigo-600 text-white"
-                : "bg-white text-indigo-600 border border-indigo-600"
-            }`}
-            onClick={() => setActiveTab(1)}
-          >
-            📝 Form & Preview
-          </button>
-          <button
-            className={`px-6 py-2 font-medium rounded-md ${
-              activeTab === 2
-                ? "bg-indigo-600 text-white"
-                : "bg-white text-indigo-600 border border-indigo-600"
-            }`}
-            onClick={() => setActiveTab(2)}
-          >
-            📤 Upload Documents
-          </button>
-        </div>
+    <div className="min-h-screen bg-gray-50 py-8 px-6">
+      {/* Static Stats */}
+      <StatsHeader />
 
-        <div className="bg-white shadow rounded-md p-6">
-          {activeTab === 1 ? (
-            <StepperForm />
-          ) : (
-            <Step3UploadScannedFiles onBack={() => setActiveTab(1)} />
-          )}
-        </div>
+      {/* Tabs Navigation */}
+      <div className="flex justify-center gap-8 mb-6">
+        {tabs.map((tab) => {
+          const active = activeTab === tab.id;
+          return (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`flex items-center gap-2 px-6 py-3 text-sm font-medium border rounded-lg transition-all ${
+                active
+                  ? "bg-white text-gray-900 border-gray-300 shadow-sm"
+                  : "bg-gray-50 text-gray-600 border-gray-200 hover:bg-gray-100"
+              }`}
+            >
+              {tab.icon}
+              <span>{tab.label}</span>
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Tab Content */}
+      <div className="bg-white rounded-xl shadow-md p-6">
+        {/* Generate Tab */}
+        {activeTab === 1 && (
+          <>
+            <div className="grid grid-cols-1 gap-6">
+              <Step1CandidateInput />
+            </div>
+            <InfoCards />
+          </>
+        )}
+
+        {/* Upload Tab */}
+        {activeTab === 2 && (
+          <Step3UploadScannedFiles onBack={() => setActiveTab(1)} />
+        )}
       </div>
     </div>
   );
-};
-
-export default TabsContainer;
+}
